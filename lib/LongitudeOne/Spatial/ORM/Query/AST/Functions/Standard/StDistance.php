@@ -69,7 +69,6 @@ class StDistance extends AbstractSpatialDQLFunction
      */
     protected function getPlatforms(): array
     {
-        // DO NOT ADD MySQL in this array, it does not accept the optional third parameter as described in OGC standards
-        return ['postgresql'];
+        return ['postgresql', 'mysql'];
     }
 }
