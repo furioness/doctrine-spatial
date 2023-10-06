@@ -19,7 +19,7 @@ use LongitudeOne\Spatial\DBAL\Types\AbstractSpatialType;
 use LongitudeOne\Spatial\PHP\Types\Geography\GeographyInterface;
 
 /**
- * MySql5.7 and less spatial platform.
+ * MySql8 platform. A dirty change for SRID
  *
  * @author  Derek J. Lambert <dlambert@dereklambert.com>
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
@@ -27,6 +27,8 @@ use LongitudeOne\Spatial\PHP\Types\Geography\GeographyInterface;
  */
 class MySql extends AbstractPlatform
 {
+    public const DEFAULT_SRID = 4326;
+
     /**
      * Convert to database value.
      *
@@ -37,7 +39,8 @@ class MySql extends AbstractPlatform
      */
     public function convertToDatabaseValueSql(AbstractSpatialType $type, $sqlExpr)
     {
-        return sprintf('ST_GeomFromText(%s)', $sqlExpr);
+        $srid = self::DEFAULT_SRID;
+        return sprintf('ST_GeomFromText(%s, %d)', $sqlExpr, $srid);
     }
 
     /**
